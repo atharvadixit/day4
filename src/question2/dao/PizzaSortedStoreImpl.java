@@ -1,24 +1,19 @@
 package question2.dao;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import question2.bean.Pizza;
 import question2.exceptions.NoPizzaFoundException;
 import question2.exceptions.PizzaAlreadyExistsException;
 
-public class PizzaStoreImpl implements PizzaStore{
-	
-	private List<Pizza> pizzas = new ArrayList<Pizza>();
+public class PizzaSortedStoreImpl implements PizzaStore{
+
+	private Set<Pizza> pizzas = new TreeSet<Pizza>();
 	
 	@Override
 	public void addNewPizza(Pizza p) throws PizzaAlreadyExistsException{
-		for(Pizza pizza: pizzas)
-		{
-			if((pizza.getPizzaName()).equals(p.getPizzaName())) {
-				throw new PizzaAlreadyExistsException();
-			}
-		}
 		pizzas.add(p);
 	}
 	
@@ -59,6 +54,5 @@ public class PizzaStoreImpl implements PizzaStore{
 		
 		return p;
 	}
-	
 	
 }

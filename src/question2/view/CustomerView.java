@@ -1,6 +1,7 @@
 package question2.view;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import question2.bean.Pizza;
@@ -13,7 +14,7 @@ public class CustomerView {
 	
 	Scanner sc = new Scanner(System.in);
 	
-	PizzaStore factory = PizzaStoreFactory.getPizzaStore();
+	PizzaStore factory = PizzaStoreFactory.getPizzaStore(PizzaStore.PizzaMapStoreImpl);
 	
 	void addPizzaDetailsAndStore() {
 		sc.nextLine();
@@ -45,7 +46,7 @@ public class CustomerView {
 		}
 		catch(PizzaAlreadyExistsException p)
 		{
-			System.out.println(p);
+			System.out.println(p.getMessage());
 		}
 	}
 	
@@ -55,14 +56,15 @@ public class CustomerView {
 		String pizzaName = sc.nextLine();
 		try{
 			Pizza pizza = factory.getPizzaByName(pizzaName);
+			System.out.println("--------------------------");
 			System.out.println("Name: " + pizza.getPizzaName() + "\nSize: " + pizza.getSizeInCms()
 			+"\nFirst Major Ingredient: " + pizza.getMajorIngredientOne() + "\nSecond Major Ingredient: " + pizza.getMajorIngredientTwo()
 			+"\nThird Major Ingredient: " + pizza.getMajorIngredientThree() + "\nWeight: " + pizza.getWeight() + "\nPrice: " + pizza.getPrice()
-					);
+			+ "\nDate inserted: " + pizza.getInsertionDate());
 		}
 		catch(NoPizzaFoundException p)
 		{
-			System.out.println(p);
+			System.out.println(p.getMessage());
 		}
 	}
 	
@@ -74,15 +76,16 @@ public class CustomerView {
 			p = factory.getPizzaNamesBySize(size);
 			for(Pizza pizza: p)
 			{
+				System.out.println("--------------------------");
 				System.out.println("Name: " + pizza.getPizzaName() + "\nSize: " + pizza.getSizeInCms()
 				+"\nFirst Major Ingredient: " + pizza.getMajorIngredientOne() + "\nSecond Major Ingredient: " + pizza.getMajorIngredientTwo()
 				+"\nThird Major Ingredient: " + pizza.getMajorIngredientThree() + "\nWeight: " + pizza.getWeight() + "\nPrice: " + pizza.getPrice()
-						);
+				+ "\nDate inserted: " + pizza.getInsertionDate());
 			}
 		}
 		catch(NoPizzaFoundException ex)
 		{
-			System.out.println(ex);
+			System.out.println(ex.getMessage());
 		}
 	}
 	

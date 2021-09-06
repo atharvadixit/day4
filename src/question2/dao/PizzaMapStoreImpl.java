@@ -1,37 +1,32 @@
 package question2.dao;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import question2.bean.Pizza;
 import question2.exceptions.NoPizzaFoundException;
 import question2.exceptions.PizzaAlreadyExistsException;
 
-public class PizzaStoreImpl implements PizzaStore{
-	
-	private List<Pizza> pizzas = new ArrayList<Pizza>();
+public class PizzaMapStoreImpl implements PizzaStore{
+
+	private Map<String, Pizza> pizzas = new HashMap<String, Pizza>();
 	
 	@Override
 	public void addNewPizza(Pizza p) throws PizzaAlreadyExistsException{
-		for(Pizza pizza: pizzas)
-		{
-			if((pizza.getPizzaName()).equals(p.getPizzaName())) {
-				throw new PizzaAlreadyExistsException();
-			}
+		
+		if(pizzas.containsKey(p.getPizzaName())) {
+			throw new PizzaAlreadyExistsException();
 		}
-		pizzas.add(p);
+		pizzas.put(p.getPizzaName(), p);
 	}
 	
 	@Override
 	public Pizza getPizzaByName(String pizzaName) throws NoPizzaFoundException{
 		
 		Pizza p = null;
-		for(Pizza pizza: pizzas) {
-			if(pizzaName.contentEquals(pizza.getPizzaName()))
-			{
-				p = pizza;
-				break;
-			}
+		if(pizzas.containsKey(p.getPizzaName())) {
+			p = pizzas.get(pizzaName);
 		}
 		if(p == null)
 		{
@@ -44,11 +39,11 @@ public class PizzaStoreImpl implements PizzaStore{
 	public ArrayList<Pizza> getPizzaNamesBySize(int size) throws NoPizzaFoundException{
 		ArrayList<Pizza> p = new ArrayList<Pizza>();
 		
-		for(Pizza pizza: pizzas)
+		for(Map.Entry<String, Pizza> pizza : pizzas.entrySet())
 		{
-			if(pizza.getSizeInCms() == size)
+			if(pizza.getValue().getSizeInCms() == size)
 			{
-				p.add(pizza);
+				p.add(pizza.getValue());
 			}
 		}
 		
@@ -59,6 +54,5 @@ public class PizzaStoreImpl implements PizzaStore{
 		
 		return p;
 	}
-	
 	
 }

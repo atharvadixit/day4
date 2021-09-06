@@ -1,13 +1,16 @@
 package question2.bean;
 
-public class Pizza {
-	String pizzaName; // unique field String description;
-	int sizeInCms; 
-	String majorIngredientOne; 
-	String majorIngredientTwo; 
-	String majorIngredientThree; 
-	float weight; 
-	float price;
+import java.util.Date;
+
+public class Pizza implements Comparable{
+	private String pizzaName; // unique field String description;
+	private int sizeInCms; 
+	private String majorIngredientOne; 
+	private String majorIngredientTwo; 
+	private String majorIngredientThree; 
+	private float weight; 
+	private float price;
+	private Date insertionDate;
 	
 	public void preparation() { 
 		System.out.println("The procedure for pizza preparation");
@@ -23,6 +26,38 @@ public class Pizza {
 		this.majorIngredientThree = majorIngredientThree;
 		this.weight = weight;
 		this.price = price;
+		this.insertionDate = new Date();
+	}
+	
+	@Override
+	public int hashCode() {
+		return pizzaName.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object p) {
+		if(this == p)
+			return true;
+		
+		if(p == null || this.getClass() != p.getClass())
+			return false;
+		
+		Pizza other = (Pizza)p;
+		
+		return (this.pizzaName).contentEquals(other.pizzaName);
+	}
+	
+	@Override
+	public int compareTo(Pizza o) {
+		return (this.getPizzaName()).compareTo(o.pizzaName);
+	}
+	
+	public Date getInsertionDate() {
+		return insertionDate;
+	}
+
+	public void setInsertionDate(Date insertionDate) {
+		this.insertionDate = insertionDate;
 	}
 
 	public String getPizzaName() {
